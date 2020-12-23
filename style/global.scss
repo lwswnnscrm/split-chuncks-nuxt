@@ -1,0 +1,470 @@
+@import './font-size.scss';
+@import './mixins.scss';
+@import './_vars.scss';
+
+//slider price and frame
+@import "vue-slider-component/dist-css/vue-slider-component.css";
+@import "vue-slider-component/theme/default.css";
+//end slider price and frame
+
+#__nuxt {
+  font-family: 'Helvetica Neue','Helvetica', 'Arial','Roboto', 'sans-serif';
+  color: $black;
+  font-size: 16px;
+}
+
+body, ul, li, div, p, span, section, a, img, b-row, svg, b-container {
+  padding: 0;
+  margin: 0;
+}
+
+ul, ol, li, nav {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: $link;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+hr {
+  max-width: 77px;
+  height: 2px;
+  background-color: $primary;
+  margin: 0;
+}
+
+.hidexs {
+  display: block;
+  @media(max-width: 991px) {
+    display: none !important;
+  }
+}
+
+
+img {
+  max-width: 100%;
+}
+
+.swiper-container, .swiper-wrapper, .swiper-slide {
+  width: 100%;
+  img {
+    width: 100%;
+  }
+}
+
+// .button {
+//   display: inline-block;
+//   text-align: center;
+//   line-height: 1;
+//   cursor: pointer;
+//   border: 1px solid #0000;
+//   padding: .85em 1em;
+//   font-size: .9rem;
+//   background-color: #fc4c02;
+//   color: #fff;
+//   border-radius: 0;
+//   font-size: 1.2rem;
+//   font-weight: normal;
+//   text-decoration: none;
+//   transition: all .5s;
+//   @media(max-width: 768px) {
+//     font-size: .9rem;
+//   }
+//   &:hover {
+//     color: #fff;
+//     background: #c00;
+//     text-decoration: none;
+//   }
+// }
+
+.invert {
+  color: #d03e00;
+  border: 2px solid #fc4c02;
+  background-color: #fff;
+  &:hover {
+    background-color: #fc4c02;
+    color: #fff;
+  }
+}
+
+.card-header {
+  background: transparent;
+  border-bottom: 1px solid #a0a0a0;
+  box-sizing: border-box;
+  padding-left: 10px;
+  .nav-item {
+    margin-right: .25rem;
+    margin-bottom: 0;
+    a {
+      border-radius: 0;
+      border-left: 1px solid #e2e6e7;
+      border-right: 1px solid #e2e6e7;
+      border-top: 1px solid #e2e6e7;
+      padding: 1.25rem 1rem;
+      line-height: 1.25rem;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #a0a0a0;
+      background: #f0f0f0;
+      height: 100%;
+      @media(max-width: 576px) {
+        padding: 1.25rem 5px;
+        font-size: 12px;
+      }
+      &:hover {
+        background: #fefefe;
+        color: #fc4c02;
+      }
+    }
+    a.active {
+      background: #fefefe;
+      border-top: 5px solid #fc4c02;
+      border-left: 1px solid #a0a0a0;
+      border-right: 1px solid #a0a0a0;
+      padding-top: calc(1.25rem - 4px);
+      color: #000;
+    }
+  }
+}
+
+.floating__label {
+  display: none;
+  position: absolute;
+  top: 0;
+  padding: 9px 0 0 15px;
+  transition: all .2s;
+  opacity: 0.5;
+  @include max-width-sm {
+      display: block;
+  }
+}
+.form-control:focus + .floating__label {
+  font-size: 60%;
+  transform: translate3d(-4px, -40%, 0);
+  opacity: 1;
+}
+
+.active__input {
+  font-size: 60%;
+  transform: translate3d(-4px, -40%, 0);
+  opacity: 1;
+}
+
+.fader {
+  .vue-slider {
+    .vue-slider-process {
+      background-color: $accent;
+    }
+    .vue-slider-dot-handle {
+      background-color: $accent;
+    }
+    .vue-slider-dot-tooltip-top {
+      top: 0;
+    }
+    .vue-slider-dot-tooltip-inner {
+      color: $black;
+      background-color: transparent;
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 21px;
+    }
+    .vue-slider-dot-tooltip-inner-top::after {
+      display: none;
+    }
+  }
+  .inputs {
+    @include flex-between;
+    .form-control {
+      width: max-content;
+      min-width: 25%;
+    }
+  }
+}
+
+// TODO: remove this before change design guides
+
+.custom {
+  &--container {
+    @media(min-width: 992px) {
+      width: 1425px;
+      padding: 0px 15px;
+    }
+    max-width: 100%;
+  }
+  &--background {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    align-items: center;
+  }
+  &--grey {
+    background-color: #f7f5f6;
+  }
+}
+
+.vue-notification-group {
+  margin: 0 5px 5px;
+  font-size: 16px;
+  color: #ffffff;
+  text-align: center;
+  top: 100px !important;
+  right: 50% !important;
+  transform: translateX(50%);
+  z-index: 1200;
+  position: fixed;
+  min-width: 60vw;
+  .vue-notification {
+    background: #44A4FC;
+    border-left: 5px solid #187FE7;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px -1px rgba(0,0,0,0.15);
+  }
+  .vue--wrapper {
+    padding: 10px;
+  }
+  & .warn {
+    background: #ffb648;
+    border-left-color: #f48a06;
+  }
+  & .error {
+    background: #E54D42;
+    border-left-color: #B82E24;
+  }
+  & .success {
+    background: #68CD86;
+    border-left-color: #42A85F;
+  }
+}
+
+// global style new design
+
+// button style
+button, .button {
+  padding: 15px 30px;
+  border-radius: 4px;
+  line-height: 21px;
+}
+
+.button {
+  &__orange {
+    background-color: $accent;
+    color: $white;
+    border: 1px solid transparent;
+    &:hover {
+      background-color: $accent-light;
+      text-decoration: none;
+      color: $white;
+    }
+    &:active {
+      background-color: $accent-dark;
+    }
+    &--inline {
+      color: $accent;
+      border: 1px solid $accent;
+      background-color: transparent;
+      &:hover {
+        background-color: $accent;
+        color: $white;
+        text-decoration: none;
+      }
+    }
+  }
+  &__ghost {
+    border: 1px solid $gray600;
+    color: $primary;
+    background-color: transparent;
+    &:hover {
+      background-color: $primary;
+      color: $white;
+      text-decoration: none;
+      border: 1px solid $primary;
+    }
+    &:visited {
+      border: 1px solid $primary;
+    }
+    &--no-border {
+      border: transparent;
+      background-color: $white;
+      &:hover {
+        color: $primary-light;
+        text-decoration: none;
+      }
+      &:visited {
+        color: $primary-dark;
+      }
+    }
+    &--invert {
+      border: 1px solid $primary;
+      background-color: transparent;
+      color: $primary;
+      &:hover {
+        background-color: $primary;
+        border: 1px solid $primary;
+        color: $white;
+        text-decoration: none;
+      }
+    }
+    &--blue {
+      background-color: $primary;
+      color: $white;
+      border: 1px solid $primary;
+      &:hover {
+        color: $primary;
+        background-color: transparent;
+      }
+    }
+  }
+  &__disabled {
+    background-color: $gray400;
+    &:hover {
+      background-color: $gray400;
+      cursor: default;
+    }
+  }
+}
+
+.submit__btn {
+  padding: 0.95em 50px;
+  margin: 0 15px;
+  min-width: 274px;
+  background-color: $gray700;
+  transition: background-color 0.2s ease-in-out;
+  font-weight: 400;
+  font-size: 1rem;
+  border: 0;
+  color: $white;
+  &:hover {
+    background-color: $gray800;
+  }
+  @include max-width-md {
+    width: 100%;
+  }
+}
+
+// slider buttons style
+.swiper-button-prev, .swiper-button-next {
+  width: auto;
+  height: auto;
+  background-color: $white;
+  background-image: none;
+  opacity: 0.5;
+  border-radius: 4px;
+  padding: 15px;
+}
+
+// checkbox style
+.checkbox {
+  display: none;
+  &__label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    p {
+      color: $black;
+      span {
+        color: $gray700;
+      }
+    }
+    &--visual-square {
+      width: 16px;
+      height: 16px;
+      border: 1px solid $black;
+      border-radius: 2px;
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:before {
+        content: '';
+        display: none;
+        background: $accent;
+        border-radius: 1px;
+        width: 12px;
+        height: 12px;
+      }
+    }
+    &--visual-circle {
+      min-width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      margin-right: 10px;
+      border: 2px solid $white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:before {
+        content: '';
+        display: none;
+        border-radius: 1px;
+        width: 22px;
+        height: 22px;
+        border: 2px solid $white;
+        border-radius: 50px;
+      }
+    }
+  }
+  &__label.disactive {
+    cursor: auto;
+    p {
+      color: $gray700;
+    }
+  }
+  &:checked + &__label {
+    p {
+      color: $accent;
+    }
+    .checkbox__label {
+      &--visual-square {
+        border-color: $accent;
+        &:before {
+          display: block;
+        }
+      }
+      &--visual-circle {
+        border: 1px solid $accent;
+        &:before {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+// Style for tables on info-pages
+.table-info {
+  width: 100%;
+  margin-bottom: 10px;
+  th {
+    background: #a7d163;
+  }
+  th, td {
+    padding: .5rem .625rem .625rem;
+    border: 3px solid #fff;
+    text-align: center;
+  }
+  tr {
+    td {
+      background-color: #fff;
+    }
+    &:nth-child(2n) {
+      td {
+        background-color: #f1f1f1;
+      }
+    }
+  }
+}
+
+.account-tile {
+  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  background: #fff;
+  border: 2px solid transparent;
+  &:hover {
+    border: 2px solid #477BC4;
+  }
+}

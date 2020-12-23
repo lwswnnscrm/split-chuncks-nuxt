@@ -1,0 +1,166 @@
+stages:
+  - test
+  - review
+  - deploy-review
+  - stop-review
+  - build-dev
+  - deploy-dev
+  - build-staging
+  - deploy-staging
+  - build-prod
+  - deploy-prod
+
+variables:
+  NAMESPACE: 'review'
+
+test:
+  stage: test
+  image: node:10.15.0
+  script:
+   - npm install
+   - npm run lint
+  except:
+    - master
+    - staging
+    - develop
+    - devops
+
+build_review:
+  stage: review
+  image: docker:git
+  variables:
+    ENV_STAGE: develop
+  services:
+    - docker:dind
+  before_script:
+    - export ENV_STAGE=develop
+    - export DEPLOY_NAME=$(echo ${CI_COMMIT_REF_SLUG} | cut -f1,2 -d'-')
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker build --tag ${CI_REGISTRY_IMAGE}:${DEPLOY_NAME}-${CI_COMMIT_SHORT_SHA} .
+    - docker push ${CI_REGISTRY_IMAGE}:${DEPLOY_NAME}-${CI_COMMIT_SHORT_SHA}
+  only:
+    - /^NUXT-.*$/
+    - /^FIX-.*$/
+
+deploy_review:
+  stage: deploy-review
+  image: ivanovua/kubectl:v0.1.1
+  environment:
+    name: $CI_COMMIT_REF_SLUG
+    url: $URL_REVIEW
+    on_stop: stop_review
+  before_script:
+    - export DEPLOY_NAME=$(echo ${CI_COMMIT_REF_SLUG} | cut -f1,2 -d'-')
+  script:
+    - echo -n $KUBE_CONFIG | base64 -d > ./config
+    - export KUBECONFIG=./config
+    - helm upgrade
+      --install ${DEPLOY_NAME} --wait
+      --set ingress.hosts\[0\].host="${DEPLOY_NAME}.ssyii.com"
+      --set ingress.hosts\[0\].paths\[0\]="/"
+      --set image.repository="${CI_REGISTRY_IMAGE}"
+      --set image.tag="${DEPLOY_NAME}-${CI_COMMIT_SHORT_SHA}"
+      -n ${NAMESPACE} ./k8s/chart/ssfront-nuxt
+  only:
+    - /^NUXT-.*$/
+    - /^FIX-.*$/
+
+stop_review:
+  stage: stop-review
+  before_script:
+    - export DEPLOY_NAME=$(echo ${CI_COMMIT_REF_SLUG} | cut -f1,2 -d'-')
+  script:
+    - echo -n $KUBE_CONFIG | base64 -d > ./config
+    - export KUBECONFIG=./config
+    - helm delete ${DEPLOY_NAME} -n review
+  when: delayed
+  start_in: 3 days
+  image: ivanovua/kubectl:v0.1.1
+  environment:
+    name: $CI_COMMIT_REF_SLUG
+    action: stop
+  only:
+    - /^NUXT-.*$/
+    - /^FIX-.*$/
+
+
+build-dev:
+  stage: build-dev
+  image: docker:git
+  variables:
+    ENV_STAGE: develop
+  services:
+    - docker:dind
+  before_script:
+    - export ENV_STAGE=develop
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker build --tag ${CI_REGISTRY_IMAGE}:$CI_COMMIT_SHA --tag ${CI_REGISTRY_IMAGE}:dev .
+    - docker push ${CI_REGISTRY_IMAGE}:$CI_COMMIT_SHA
+    - docker push ${CI_REGISTRY_IMAGE}:dev
+  only:
+    - develop
+deploy-dev:
+  stage: deploy-dev
+  image: ivanovua/kubectl:latest
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - echo -n $KUBE_CONFIG | base64 -d > ./config
+    - kubectl set image deployment ssfront-nuxt-dev ssfront-nuxt-dev=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}  --kubeconfig ./config --namespace dev
+  only:
+    - develop
+build-staging:
+  stage: build-staging
+  image: docker:git
+  variables:
+    ENV_STAGE: staging
+  services:
+    - docker:dind
+  before_script:
+    - export ENV_STAGE=staging
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker build --tag ${CI_REGISTRY_IMAGE}:$CI_COMMIT_SHA --tag ${CI_REGISTRY_IMAGE}:staging .
+    - docker push ${CI_REGISTRY_IMAGE}:$CI_COMMIT_SHA
+    - docker push ${CI_REGISTRY_IMAGE}:staging
+  only:
+    - staging
+deploy-staging:
+  stage: deploy-staging
+  image: ivanovua/kubectl:latest
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - echo -n $KUBE_CONFIG | base64 -d > ./config
+    - kubectl set image deployment ssfront-nuxt-staging ssfront-nuxt-staging=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}  --kubeconfig ./config --namespace stage
+  only:
+    - staging
+build-prod:
+  stage: build-prod
+  image: docker:git
+  variables:
+    ENV_STAGE: prod
+  services:
+    - docker:dind
+  before_script:
+    - export ENV_STAGE=prod
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker build --tag ${CI_REGISTRY_IMAGE}:$CI_COMMIT_SHA --tag ${CI_REGISTRY_IMAGE}:prod --tag ${CI_REGISTRY_IMAGE}:latest .
+    - docker push ${CI_REGISTRY_IMAGE}:$CI_COMMIT_SHA
+    - docker push ${CI_REGISTRY_IMAGE}:prod
+    - docker push ${CI_REGISTRY_IMAGE}:latest
+  only:
+    - master
+deploy-prod:
+  stage: deploy-prod
+  image: ivanovua/kubectl:latest
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - echo -n $KUBE_CONFIG | base64 -d > ./config
+    - kubectl set image deployment ssfront-nuxt ssfront-nuxt=${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}  --kubeconfig ./config --namespace prod
+  only:
+    - master
