@@ -2,7 +2,6 @@
   <main>
     <slider />
     <collection />
-    <arrivals />
     <specialOffers />
     <guides />
     <brands />

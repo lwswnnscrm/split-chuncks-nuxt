@@ -27,7 +27,7 @@
             class="item"
           >
             <img
-              :src="$il('https://d9qzjwuieyamt.cloudfront.net/5.3.49.2/res/images/banners/home/nav-mens.jpg?20200228160006')"
+              src="https://d9qzjwuieyamt.cloudfront.net/5.3.49.2/res/images/banners/home/nav-mens.jpg?20200228160006"
               alt=""
             >
             <p class="large bold">
@@ -43,7 +43,7 @@
             class="item"
           >
             <img
-              :src="$il('https://d9qzjwuieyamt.cloudfront.net/5.3.49.2/res/images/banners/home/nav-womens.jpg?20200228160006')"
+              src="https://d9qzjwuieyamt.cloudfront.net/5.3.49.2/res/images/banners/home/nav-womens.jpg?20200228160006"
               alt=""
             >
             <p class="large bold">
@@ -59,7 +59,7 @@
             class="item"
           >
             <img
-              :src="$il('https://d9qzjwuieyamt.cloudfront.net/5.3.49.2/res/images/banners/home/nav-supercheap.jpg?20200228160006')"
+              src="https://d9qzjwuieyamt.cloudfront.net/5.3.49.2/res/images/banners/home/nav-supercheap.jpg?20200228160006"
               alt=""
             >
             <p class="large bold">
@@ -75,7 +75,7 @@
             class="item"
           >
             <img
-              :src="$il('https://d9qzjwuieyamt.cloudfront.net/5.3.49.2/res/images/banners/home/nav-essentials.jpg?20200228160006')"
+              src="https://d9qzjwuieyamt.cloudfront.net/5.3.49.2/res/images/banners/home/nav-essentials.jpg?20200228160006"
               alt=""
             >
             <p class="large bold">
@@ -91,7 +91,7 @@
             class="item"
           >
             <img
-              :src="$il('https://d9qzjwuieyamt.cloudfront.net/5.3.49.2/res/images/banners/home/nav-designer.jpg?20200228160006')"
+              src="https://d9qzjwuieyamt.cloudfront.net/5.3.49.2/res/images/banners/home/nav-designer.jpg?20200228160006"
               alt=""
             >
             <p class="large bold">
@@ -107,7 +107,7 @@
             class="item"
           >
             <img
-              :src="$il('https://d9qzjwuieyamt.cloudfront.net/5.3.49.2/res/images/banners/home/nav-boutique.jpg?20200228160006')"
+              src="https://d9qzjwuieyamt.cloudfront.net/5.3.49.2/res/images/banners/home/nav-boutique.jpg?20200228160006"
               alt=""
             >
             <p class="large bold">

@@ -27,7 +27,7 @@
             >
               <div class="title__logo">
                 <img
-                  :src="$il(image.logo)"
+                  :src="image.logo"
                   alt="#"
                 >
               </div>

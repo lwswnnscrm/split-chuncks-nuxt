@@ -2,7 +2,7 @@
   <div class="item">
     <a :href="item.link">
       <img
-        :src="$il(item.img)"
+        :src="item.img"
         alt="#"
       >
     </a>

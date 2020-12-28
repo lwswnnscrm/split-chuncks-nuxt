@@ -1,5 +1,5 @@
 export default async ({
-  app, req, store, route, redirect,
+  app, req, route, redirect,
 }) => {
   if (req) {
     const token = app.$cookies.get('token');

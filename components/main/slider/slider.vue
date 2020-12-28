@@ -38,7 +38,7 @@
           class="swiper-button-prev"
         >
           <img
-            :src="$il('https://ssfront.s3.eu-west-1.amazonaws.com/SbtWQoxfrMDqGu1HHOkGnqnPMTLThWvc.png')"
+            src="https://ssfront.s3.eu-west-1.amazonaws.com/SbtWQoxfrMDqGu1HHOkGnqnPMTLThWvc.png"
             alt="#"
           >
         </div>
@@ -47,7 +47,7 @@
           class="swiper-button-next"
         >
           <img
-            :src="$il('https://ssfront.s3.eu-west-1.amazonaws.com/HgjbYYiEXvvbcz3NoCVbiNcDno9qxr3Q.png')"
+            src="https://ssfront.s3.eu-west-1.amazonaws.com/HgjbYYiEXvvbcz3NoCVbiNcDno9qxr3Q.png"
             alt="#"
           >
         </div>

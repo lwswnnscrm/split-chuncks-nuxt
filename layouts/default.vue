@@ -4,7 +4,6 @@
       test header
     </h2>
     <nuxt />
-    <notifications group="foo" />
     <h2>
       test footer
     </h2>
